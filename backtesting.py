@@ -122,6 +122,34 @@ class crypto_data:
             top_n = self.results_df.sort_values(by='Sharpe', ascending=False).head(n)
             best = top_n.iloc[0]
 
+            plt.figure(figsize=(12, 6))
+
+            ###  plot graph  ###
+            bh_curve = (1 + self.df['Daily_Return'].fillna(0)).cumprod()
+
+            s, l, thresh = int(best['Short']), int(best['Long']), best['RSI_Thresh']
+            ma_s = self.df['Close'].rolling(s).mean()
+            ma_l = self.df['Close'].rolling(l).mean()
+            sig = ((ma_s > ma_l) & (self.df['RSI'] > thresh)).astype(int)
+            strat_ret = sig.shift(1) * self.df['Daily_Return']
+            strat_curve = (1 + strat_ret.fillna(0)).cumprod()
+
+            plt.plot(strat_curve, label=f'Strategy (Sharpe: {best["Sharpe"]})', color='blue', linewidth=2)
+            plt.plot(bh_curve, label='Buy & Hold (BTC-USD)', color='gray', linestyle='--', alpha=0.6)
+
+            plt.title(f'Backtesting Result: {self.ticker}', fontsize=14)
+            plt.xlabel('Date')
+            plt.ylabel('Cumulative Return')
+            plt.legend()
+            plt.grid(True, alpha=0.3)
+
+            plt.savefig('equity_curve.png')
+            print("\n📈 Equity curve saved as 'equity_curve.png'")
+            plt.show()
+
+
+
+
             buy_and_hold_ret = (1 + self.df['Daily_Return'].fillna(0)).cumprod().iloc[-1] - 1
 
 
