@@ -1,0 +1,21 @@
+# Crypto Quantitative Backtesting Engine (WFA)
+
+This project implements a professional-grade backtesting engine for cryptocurrency trading, focusing on **Walk-Forward Analysis (WFA)** and **Dual-Stop Risk Management**.
+
+### 🚀 Key Features
+- **Vectorized Backtesting**: High-performance strategy evaluation using Pandas/NumPy.
+- **Walk-Forward Optimization**: Mitigates overfitting by using rolling training and testing periods.
+- **Risk Management**: Integrated Dual-Stop mechanism (Fixed Hard Stop + Dynamic ATR-based Stop).
+- **Advanced Metrics**: Calculates Sharpe Ratio, Sortino Ratio, Max Drawdown, and Win Rate.
+
+### 📈 Strategy Logic
+- **Entry**: Moving Average Crossover (Short/Long) filtered by RSI threshold.
+- **Exit**: Dynamic ATR trailing stop or hard percentage stop.
+- **Position Sizing**: Suggestions based on Half-Kelly Criterion.
+
+### 🛠️ Tech Stack
+- Python (Pandas, NumPy, Matplotlib)
+- Yahoo Finance API (`yfinance`)
+
+
+
